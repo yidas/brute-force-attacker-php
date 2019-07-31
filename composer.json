@@ -1,0 +1,20 @@
+{
+    "name": "yidas/brute-force-attacker",
+    "description": "Brute-force attack tool for generating all possible string and executing function",
+    "keywords": ["brute force attack", "tool", "php", "cryptanalytic"],
+    "homepage": "https://github.com/yidas/brute-force-attacker-php",
+    "type": "library",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/yidas/brute-force-attacker-php/issues",
+        "source": "https://github.com/yidas/brute-force-attacker-php"
+    },
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "yidas\\": "src/"
+        }
+    }
+}
