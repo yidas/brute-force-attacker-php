@@ -68,7 +68,7 @@ class BruteForceAttacker
         self::$count = 0;
 
         // Run
-        $length = ($options['length'] >= 1) ? floor($options['length']) : 1;
+        $length = ($options['length'] >= 1) ? intval(floor($options['length'])) : 1;
         self::recur($length);
     }
 
