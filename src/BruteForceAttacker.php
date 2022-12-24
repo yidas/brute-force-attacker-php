@@ -86,8 +86,10 @@ class BruteForceAttacker
 
     public static function bootUp($charsSaved)
     {
-        foreach (str_split($charsSaved) as $char) {
-            self::$charsRecorded[] = $char;
+        if (!empty($charsSaved)) {
+            foreach (str_split($charsSaved) as $char) {
+                self::$charsRecorded[] = $char;
+            }
         }
     }
 
