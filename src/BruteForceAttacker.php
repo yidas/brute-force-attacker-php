@@ -67,7 +67,7 @@ class BruteForceAttacker
             'callback' => function () {},
             'skipLength' => 0,
             'skipCount' => 0,
-            'startsCount' => 0,
+            'startsCount' => 1,
         ];
         $options = array_merge($defaultOptions, $options);
 
@@ -124,12 +124,12 @@ class BruteForceAttacker
 
             if ($length <= 1) {
 
-                // Counter
-                self::$count ++;
-
                 // Call user callback
                 self::$found = call_user_func_array(self::$callback, [self::$chars, &self::$count]);
                 self::$charsRecorded = [];
+
+                // Counter
+                self::$count ++;
 
                 if(self::$found) {
                     break;
@@ -145,8 +145,6 @@ class BruteForceAttacker
     private static function wasVerified($length, $key)
     {
         $data = self::$charsRecorded[$length - 1];
-        if($length == 1 && $key <= array_search($data, self::$charMap))
-            return true;
         if($key < array_search($data, self::$charMap))
             return true;
         return false;
