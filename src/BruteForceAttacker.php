@@ -41,11 +41,6 @@ class BruteForceAttacker
      * @var integer Count
      */
     private static $count = 0;
-
-    /**
-     * @var boolean Found
-     */
-    private static $found = false;
     
     /**
      * Run
@@ -73,7 +68,7 @@ class BruteForceAttacker
         self::$count = 0;
 
         // Run
-        $length = ($options['length'] >= 1) ? intval(floor($options['length'])) : 1;
+        $length = ($options['length'] >= 1) ? floor($options['length']) : 1;
         self::recur($length);
     }
 
@@ -88,11 +83,6 @@ class BruteForceAttacker
         // Each charMap
         foreach (self::$charMap as $value) {
 
-            // Exit from loop is the value has been found.
-            if(self::$found) {
-                break;
-            }
-
             // Skip mechanism
             if (self::$skipLength==$length && self::$skipCount > 0) {
                 self::$skipCount--;
@@ -105,11 +95,7 @@ class BruteForceAttacker
             if ($length <= 1) {
 
                 // Call user callback
-                self::$found = call_user_func_array(self::$callback, [self::$chars, &self::$count]);
-
-                if(self::$found) {
-                    break;
-                }
+                call_user_func_array(self::$callback, [self::$chars, &self::$count]);
                 // Counter
                 self::$count ++;
     
