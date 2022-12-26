@@ -40,6 +40,7 @@ Generates `0`-`9` string and matches target string:
     'callback' => function ($string, $count) {
         if ($string=="264508") {
             echo "Matched `{$string}` with {$count} times\n";
+            return true;
         }
     },
 ]);
