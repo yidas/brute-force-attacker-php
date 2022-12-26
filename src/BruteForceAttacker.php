@@ -105,11 +105,8 @@ class BruteForceAttacker
             if ($length <= 1) {
 
                 // Call user callback
-                self::$found = call_user_func_array(self::$callback, [self::$chars, &self::$count]);
+                self::$found = call_user_func_array(self::$callback, [$value, &self::$count]);
 
-                if(self::$found) {
-                    break;
-                }
                 // Counter
                 self::$count ++;
     
