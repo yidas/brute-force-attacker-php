@@ -24,11 +24,18 @@ DEMONSTRATION
 
 ```php
 \yidas\BruteForceAttacker::run([
-    'length' => 2,
+    'length' => 4,
     'callback' => function ($string) {
         echo "{$string}\n";
     },
 ]);
+
+/* Result
+AAAA
+AAAB
+AAAC
+...
+*/
 ```
 
 Generates `0`-`9` string and matches target string:
