@@ -96,10 +96,11 @@ class BruteForceAttacker
     /**
      * Recursive function
      *
-     * @param integer $layer
+     * @param integer $length Char length
+     * @param integer $index Current index
      * @return void
      */
-    private static function recur($length) {
+    private static function recur($length, $index=0) {
 
         // Each charMap
         foreach (self::$charMap as $key => $value) {
@@ -120,7 +121,10 @@ class BruteForceAttacker
             }
 
             // Assign char
-            self::$chars[$length-1] = $value;
+            self::$chars[$index] = $value;
+
+            // PHP 5 support
+            self::$chars = is_array(self::$chars) ? implode(self::$chars) : self::$chars;
 
             if ($length <= 1) {
 
@@ -128,16 +132,10 @@ class BruteForceAttacker
                 self::$found = call_user_func_array(self::$callback, [self::$chars, &self::$count]);
                 self::$charsRecorded = [];
 
-                // Counter
-                self::$count ++;
-
-                if(self::$found) {
-                    break;
-                }
 
             } else {
                 // Recur with reducing 1 length
-                self::recur($length - 1);
+                self::recur($length - 1, $index + 1);
             }
         }
     }
