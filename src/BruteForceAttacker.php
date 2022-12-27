@@ -102,10 +102,13 @@ class BruteForceAttacker
             // Assign char
             self::$chars[$length-1] = $value;
 
+            // PHP 5 support
+            self::$chars = is_array(self::$chars) ? implode(self::$chars) : self::$chars;
+
             if ($length <= 1) {
 
                 // Call user callback
-                self::$found = call_user_func_array(self::$callback, [$value, &self::$count]);
+                self::$found = call_user_func_array(self::$callback, [self::$chars, &self::$count]);
 
                 // Counter
                 self::$count ++;
