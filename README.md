@@ -26,9 +26,13 @@ DEMONSTRATION
 \yidas\BruteForceAttacker::run([
     'length' => 2,
     'callback' => function ($string) {
-        echo "{$string}\n";
+        echo "{$string} ";
     },
 ]);
+
+/* Result
+AA AB AC ... AX AY AZ Aa Ab Ac ... Ax Ay Az A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 BA ...
+*/
 ```
 
 Generates `0`-`9` string and matches target string:
@@ -40,6 +44,7 @@ Generates `0`-`9` string and matches target string:
     'callback' => function ($string, $count) {
         if ($string=="264508") {
             echo "Matched `{$string}` with {$count} times\n";
+            return true;
         }
     },
 ]);
