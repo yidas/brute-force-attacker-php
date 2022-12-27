@@ -132,6 +132,8 @@ class BruteForceAttacker
                 self::$found = call_user_func_array(self::$callback, [self::$chars, &self::$count]);
                 self::$charsRecorded = [];
 
+                // Counter
+                self::$count ++;
 
             } else {
                 // Recur with reducing 1 length
