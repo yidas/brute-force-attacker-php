@@ -24,23 +24,14 @@ DEMONSTRATION
 
 ```php
 \yidas\BruteForceAttacker::run([
-    'length' => 4,
+    'length' => 2,
     'callback' => function ($string) {
-        echo "{$string}\n";
+        echo "{$string} ";
     },
 ]);
 
 /* Result
-AAAA
-AAAB
-AAAC
-...
-AAAa
-AAAb
-...
-AAA0
-AAA1
-...
+AA AB AC AD AE AF AG AH AI AJ AK AL AM AN AO AP AQ AR AS AT AU AV AW AX AY AZ Aa Ab Ac Ad Ae Af Ag Ah Ai Aj Ak Al Am An Ao Ap Aq Ar As At Au Av Aw Ax Ay Az A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 BA ...
 */
 ```
 
