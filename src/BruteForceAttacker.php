@@ -84,7 +84,7 @@ class BruteForceAttacker
     }
 
 
-    public static function bootUp($charsSaved)
+    public static function boot($charsSaved)
     {
         if (!empty($charsSaved)) {
             foreach (str_split($charsSaved) as $char) {
@@ -110,7 +110,7 @@ class BruteForceAttacker
                 break;
             }
 
-            if(!empty(self::$charsRecorded) && self::wasVerified($length, $key)) {
+            if(!empty(self::$charsRecorded) && self::wasVerified($index, $key)) {
                 continue;
             }
 
@@ -123,10 +123,11 @@ class BruteForceAttacker
             // Assign char
             self::$chars[$index] = $value;
 
-            // PHP 5 support
-            self::$chars = is_array(self::$chars) ? implode(self::$chars) : self::$chars;
 
             if ($length <= 1) {
+
+                // PHP 5 support
+                self::$chars = is_array(self::$chars) ? implode(self::$chars) : self::$chars;
 
                 // Call user callback
                 self::$found = call_user_func_array(self::$callback, [self::$chars, &self::$count]);
@@ -142,9 +143,9 @@ class BruteForceAttacker
         }
     }
 
-    private static function wasVerified($length, $key)
+    private static function wasVerified($index, $key)
     {
-        $data = self::$charsRecorded[$length - 1];
+        $data = self::$charsRecorded[$index];
         if($key < array_search($data, self::$charMap))
             return true;
         return false;
