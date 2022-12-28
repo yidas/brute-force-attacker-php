@@ -56,7 +56,7 @@ REQUIREMENTS
 ------------
 This library requires the following:
 
-- PHP 5.4.0+\|7.0+
+- PHP 5.4.0+\|7.0+\|8.0+
 
 ---
 
@@ -107,6 +107,7 @@ $hash = '5b7476628919d2d57965e25ba8b2588e94723b76';
             $count = 0;
         }
     },
+    'startFrom' => 'AABAAAAA', // Start from `AABAAAAA` -> `AABAAAAB` ...
     'skipLength' => 8,  // Select 8st character for skipCount
     'skipCount' => 1,   // Start from `B` (Skip 1 arrangement form charMap)
 ]);
@@ -120,13 +121,17 @@ String length for generating
 
 Character map used to generate strings
 
-#### Callback
+#### callback
 
 Customized function for performing brute-force attack
 
 ```php
 function (string $key, integer & $count)
 ```
+
+#### startFrom
+
+Start running from the givien charset string
 
 #### skipLength
 
