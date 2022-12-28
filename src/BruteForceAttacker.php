@@ -8,7 +8,8 @@ namespace yidas;
  * Generates string with all arrangement and gives the string to callback function to execute.
  * 
  * @author  Nick Tsai <myintaer@gmail.com>
- * @version 1.0.0
+ * @author  ycoya
+ * @version 2.0.0
  */
 class BruteForceAttacker
 {
@@ -67,7 +68,7 @@ class BruteForceAttacker
             'callback' => function () {},
             'skipLength' => 0,
             'skipCount' => 0,
-            'startsCount' => 1,
+            'startCount' => 1,
         ];
         $options = array_merge($defaultOptions, $options);
 
@@ -76,17 +77,25 @@ class BruteForceAttacker
         self::$callback = $options['callback'];
         self::$skipLength = $options['skipLength'];
         self::$skipCount = $options['skipCount'];
-        self::$count = $options['startsCount'];
+        self::$count = $options['startCount'];
+        if (isset($options['startFrom'])) {
+            self::startFrom($options['startFrom']);
+        }
 
         // Run
-        $length = ($options['length'] >= 1) ?  intval(floor($options['length'])) : 1;
+        $length = ($options['length'] >= 1) ? intval(floor($options['length'])) : 1;
         self::recur($length);
     }
 
-
-    public static function boot($charsSaved)
+    /**
+     * Start from specific char sequence
+     * 
+     * @param string $charsSaved
+     */
+    public static function startFrom($charsSaved)
     {
-        if (!empty($charsSaved)) {
+        self::$charsRecorded = [];
+        if (!empty($charsSaved) && is_string($charsSaved)) {
             foreach (str_split($charsSaved) as $char) {
                 self::$charsRecorded[] = $char;
             }
@@ -110,7 +119,7 @@ class BruteForceAttacker
                 break;
             }
 
-            if(!empty(self::$charsRecorded) && self::wasVerified($index, $key)) {
+            if(!empty(self::$charsRecorded) && self::matchStartFrom($index, $key)) {
                 continue;
             }
 
@@ -143,7 +152,13 @@ class BruteForceAttacker
         }
     }
 
-    private static function wasVerified($index, $key)
+    /** 
+     * Match the start-from char sequence
+     * 
+     * @param integer $index
+     * @param integer $key
+     */
+    private static function matchStartFrom($index, $key)
     {
         $data = self::$charsRecorded[$index];
         if($key < array_search($data, self::$charMap))
