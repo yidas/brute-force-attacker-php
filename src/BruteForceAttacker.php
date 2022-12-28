@@ -48,6 +48,11 @@ class BruteForceAttacker
     private static $found = false;
     
     /**
+     * @var array $charsRecorded to continue where it left of last time
+     */
+    private static $charsRecorded = [];
+
+    /**
      * Run
      *
      * @param array $options
@@ -62,6 +67,7 @@ class BruteForceAttacker
             'callback' => function () {},
             'skipLength' => 0,
             'skipCount' => 0,
+            'startsCount' => 1,
         ];
         $options = array_merge($defaultOptions, $options);
 
@@ -70,11 +76,21 @@ class BruteForceAttacker
         self::$callback = $options['callback'];
         self::$skipLength = $options['skipLength'];
         self::$skipCount = $options['skipCount'];
-        self::$count = 0;
+        self::$count = $options['startsCount'];
 
         // Run
-        $length = ($options['length'] >= 1) ? intval(floor($options['length'])) : 1;
+        $length = ($options['length'] >= 1) ?  intval(floor($options['length'])) : 1;
         self::recur($length);
+    }
+
+
+    public static function boot($charsSaved)
+    {
+        if (!empty($charsSaved)) {
+            foreach (str_split($charsSaved) as $char) {
+                self::$charsRecorded[] = $char;
+            }
+        }
     }
 
     /**
@@ -87,11 +103,15 @@ class BruteForceAttacker
     private static function recur($length, $index=0) {
 
         // Each charMap
-        foreach (self::$charMap as $value) {
+        foreach (self::$charMap as $key => $value) {
 
-            // Exit from loop is the value has been found.
+            // Exit from loop if the value has been found.
             if(self::$found) {
                 break;
+            }
+
+            if(!empty(self::$charsRecorded) && self::wasVerified($index, $key)) {
+                continue;
             }
 
             // Skip mechanism
@@ -103,21 +123,31 @@ class BruteForceAttacker
             // Assign char
             self::$chars[$index] = $value;
 
-            // PHP 5 support
-            self::$chars = is_array(self::$chars) ? implode(self::$chars) : self::$chars;
 
             if ($length <= 1) {
 
+                // PHP 5 support
+                self::$chars = is_array(self::$chars) ? implode(self::$chars) : self::$chars;
+
                 // Call user callback
                 self::$found = call_user_func_array(self::$callback, [self::$chars, &self::$count]);
+                self::$charsRecorded = [];
 
                 // Counter
                 self::$count ++;
-    
+
             } else {
                 // Recur with reducing 1 length
                 self::recur($length - 1, $index + 1);
             }
         }
+    }
+
+    private static function wasVerified($index, $key)
+    {
+        $data = self::$charsRecorded[$index];
+        if($key < array_search($data, self::$charMap))
+            return true;
+        return false;
     }
 }
