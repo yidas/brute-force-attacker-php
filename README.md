@@ -1,4 +1,7 @@
 <p align="center">
+    <a href="https://www.php.net/" target="_blank">
+        <img src="https://www.php.net/images/logos/php-logo-white.svg">
+    </a>
     <h1 align="center">Brute Force Attacker <i>for</i> PHP</h1>
     <br>
 </p>
